@@ -6,6 +6,9 @@ const initialState = {
     },
     user: {
         search_text: "", status: "", start_date: "", end_date: "", per_page: 10, page: 1
+    },
+    userLeaveRequest: {
+        search_text: "", status: "", start_date: "", end_date: "", per_page: 10, page: 1
     }
 };
 

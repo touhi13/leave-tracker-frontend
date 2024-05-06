@@ -15,10 +15,10 @@ export const leaveRequestsApi = apiSlice.injectEndpoints({
             query: () => `/api/v1/leave-request-count`,
         }),
         addLeaveRequest: builder.mutation({
-            query: ({ data }) => ({
-                url: '/api/v1/leave-request/save',
+            query: ({ formattedData }) => ({
+                url: '/api/v1/leave-request',
                 method: 'POST',
-                body: data
+                body: formattedData
             }),
             async onQueryStarted(arg, { queryFulfilled, dispatch }) {
                 // Pessimistic cache update
@@ -26,9 +26,9 @@ export const leaveRequestsApi = apiSlice.injectEndpoints({
                     const { data: newLeaveRequest } = await queryFulfilled;
                     dispatch(
                         apiSlice.util.updateQueryData(
-                            'getLeaveRequests', arg.leaveRequestCacheKey,
+                            'getLeaveRequests', arg.cacheKey,
                             (draft) => {
-                                draft.data.unshift(newLeaveRequest.data);
+                                draft.data.data.unshift(newLeaveRequest.data);
 
                             }
                         )

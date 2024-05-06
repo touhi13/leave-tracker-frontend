@@ -44,18 +44,17 @@ const LeaveRequest = () => {
         <>
             <div className='mb-2 flex items-center justify-between space-y-2'>
                 <div>
-                    <h2 className='text-2xl font-bold tracking-tight'>Welcome back!</h2>
-                    <p className='text-muted-foreground'>
+                    <h2 className='text-2xl font-bold tracking-tight'>Leave Requests</h2>
+                    {/* <p className='text-muted-foreground'>
                         Here&apos;s a list of your tasks for this month!
-                    </p>
+                    </p> */}
                 </div>
             </div>
             <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
                 <Table>
-                    <TableCaption>A list of your recent leaveRequests.</TableCaption>
+                    <TableCaption>A list of your recent Requests.</TableCaption>
                     <TableHeader>
                         <TableRow>
-                            <TableHead className="w-[100px]">Photo</TableHead>
                             <TableHead>Name</TableHead>
                             <TableHead>Email</TableHead>
                             <TableHead>Leave Type</TableHead>
@@ -70,7 +69,6 @@ const LeaveRequest = () => {
                     <TableBody>
                         {data?.data?.data?.map((leaveRequest) => (
                             <TableRow key={leaveRequest.id}>
-                                <TableCell className="font-medium">{leaveRequest.profile_image}</TableCell>
                                 <TableCell>{leaveRequest.name}</TableCell>
                                 <TableCell>{leaveRequest.email}</TableCell>
                                 <TableCell>{leaveRequest.leave_type}</TableCell>

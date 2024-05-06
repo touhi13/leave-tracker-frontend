@@ -8,7 +8,7 @@ export const apiSlice = createApi({
         baseUrl: `${VITE_REACT_APP_API_URL}`,
         prepareHeaders: async (headers, { getState, endpoint }) => {
             const token = getState()?.auth?.accessToken;
-            console.log(token)
+            // console.log(token)
             if (token) {
                 headers.set("Authorization", `bearer ${token}`)
 

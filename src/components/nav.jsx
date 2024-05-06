@@ -22,9 +22,11 @@ import {
 } from './ui/tooltip';
 import { cn } from '@/lib/utils';
 import useCheckActiveNav from '@/hooks/use-check-active-nav';
+import { useSelector } from 'react-redux';
 // import { SideLink } from '@/data/sidelinks';
 
 function NavLink({ title, icon, label, href, closeNav, subLink = false }) {
+  // console.log('NavLink')
   const { checkActiveNav } = useCheckActiveNav();
   return (
     <Link
@@ -52,6 +54,7 @@ function NavLink({ title, icon, label, href, closeNav, subLink = false }) {
 }
 
 function NavLinkDropdown({ title, icon, label, sub, closeNav }) {
+  console.log('NavLinkDropdown')
   const { checkActiveNav } = useCheckActiveNav();
   const isChildActive = !!sub?.find((s) => checkActiveNav(s.href));
 
@@ -92,6 +95,8 @@ function NavLinkDropdown({ title, icon, label, sub, closeNav }) {
 }
 
 function NavLinkIcon({ title, icon, label, href }) {
+  console.log("NavLinkIcon")
+
   const { checkActiveNav } = useCheckActiveNav();
   return (
     <Tooltip delayDuration={0}>
@@ -121,6 +126,7 @@ function NavLinkIcon({ title, icon, label, href }) {
 }
 
 function NavLinkIconDropdown({ title, icon, label, sub }) {
+  console.log("NavLinkIconDropdown")
   const { checkActiveNav } = useCheckActiveNav();
   const isChildActive = !!sub?.find((s) => checkActiveNav(s.href));
 
@@ -176,8 +182,15 @@ export default function Nav({
   className,
   closeNav,
 }) {
+  const user = useSelector((state) => state.auth.user);
+
   const renderLink = ({ sub, ...rest }) => {
     const key = `${rest.title}-${rest.href}`;
+
+    const userHasAccess = user.role === rest.role;
+
+    if (!userHasAccess) return null;
+    
     if (isCollapsed && sub)
       return (
         <NavLinkIconDropdown

@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import {
     Table,
     TableBody,
@@ -20,23 +19,22 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination"
 import { useDispatch, useSelector } from 'react-redux';
-import { useGetUsersQuery } from '@/features/user/userApi';
+import { useGetLeaveRequestsQuery } from '@/features/leaveRequest/leaveRequestApi';
 import { updateCacheKey } from '@/features/cacheKey/cacheKeySlice';
-import UpdateUserStatus from './components/UpdateUserStatus';
+import SubmitRequest from "./components/SubmitRequest";
+// import MangeRequest from './components/MangeRequest';
 
-const User = () => {
-    const userCacheKey = useSelector((state) => state.cacheKey.user);
+const LeaveRequest = () => {
+    const cacheKey = useSelector((state) => state.cacheKey.userLeaveRequest);
     const dispatch = useDispatch();
 
-    console.log(userCacheKey)
-
-    const { data, isLoading, isError, error, } = useGetUsersQuery(userCacheKey);
+    const { data, isLoading, isError, error, } = useGetLeaveRequestsQuery(cacheKey);
 
     const handlePagination = (e, page) => {
         e.preventDefault();
-        console.log(typeof (page))
+        // console.log(typeof (page))
         dispatch(updateCacheKey({
-            key: 'user', payload: { "page": page }
+            key: 'userLeaveRequest', payload: { "page": page }
         }))
     }
 
@@ -44,30 +42,38 @@ const User = () => {
         <>
             <div className='mb-2 flex items-center justify-between space-y-2'>
                 <div>
-                    <h2 className='text-2xl font-bold tracking-tight'>Users</h2>
+                    <h2 className='text-2xl font-bold tracking-tight'>Leave Requests</h2>
+
+                </div>
+                <div className='flex items-center space-x-2'>
+                    <SubmitRequest/>
                 </div>
             </div>
             <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
                 <Table>
-                    <TableCaption>A list of your recent users.</TableCaption>
+                    <TableCaption>A list of your recent Requests.</TableCaption>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>Name</TableHead>
-                            <TableHead>Email</TableHead>
+                            <TableHead>Leave Type</TableHead>
+                            <TableHead>Start Date</TableHead>
+                            <TableHead>End Date</TableHead>
+                            <TableHead>Reason</TableHead>
                             <TableHead>Status</TableHead>
-                            <TableHead className="text-right">Action</TableHead>
+                            <TableHead>Admin Comment</TableHead>
+                            {/* <TableHead className="text-right">Action</TableHead> */}
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {data?.data?.data?.map((user) => (
-                            <TableRow key={user.id}>
-                                <TableCell>{user.name}</TableCell>
-                                <TableCell>{user.email}</TableCell>
-                                <TableCell>{user.status}</TableCell>
-                                <TableCell className="text-right">
-                                    <UpdateUserStatus user_id={user.id} status={user.status} />
-                                    {/* <UpdateUserStatus id={user.id} action="Rejected" /> */}
-                                </TableCell>
+                        {data?.data?.data?.map((leaveRequest) => (
+                            <TableRow key={leaveRequest.id}>
+                                <TableCell>{leaveRequest.leave_type}</TableCell>
+                                <TableCell>{leaveRequest.start_date}</TableCell>
+                                <TableCell>{leaveRequest.end_date}</TableCell>
+                                <TableCell>{leaveRequest.reason}</TableCell>
+                                <TableCell>{leaveRequest.status}</TableCell>
+                                <TableCell>{leaveRequest.admin_comment}</TableCell>
+                                {/* <TableCell className="text-right">
+                                </TableCell> */}
                             </TableRow>
                         ))}
                     </TableBody>
@@ -117,4 +123,4 @@ const User = () => {
     );
 };
 
-export default User;
+export default LeaveRequest;

@@ -1,24 +1,6 @@
 import {
-  IconApps,
-  IconBarrierBlock,
-  IconBoxSeam,
-  IconChartHistogram,
-  IconChecklist,
-  IconComponents,
-  IconError404,
-  IconExclamationCircle,
-  IconHexagonNumber1,
-  IconHexagonNumber2,
-  IconHexagonNumber3,
-  IconHexagonNumber4,
-  IconHexagonNumber5,
   IconLayoutDashboard,
-  IconMessages,
   IconRouteAltLeft,
-  IconServerOff,
-  IconSettings,
-  IconTruck,
-  IconUserShield,
   IconUsers,
 } from '@tabler/icons-react';
 
@@ -29,35 +11,29 @@ export const SideLinks = [
     title: 'Dashboard',
     label: '',
     href: '/',
-    icon : <IconLayoutDashboard/>
+    icon: <IconLayoutDashboard />,
+    role: 'admin'
   },
   {
     title: 'Users',
     label: '',
     href: '/user',
-    icon: <IconUsers/>
+    icon: <IconUsers />,
+    role: 'admin'
+
   },
   {
     title: 'Requests',
-    label: '10',
-    href: '/requests',
-    icon: <IconRouteAltLeft/>,
-
-    sub: [
-      {
-        title: 'Trucks',
-        label: '9',
-        href: '/trucks',
-        icon: <IconTruck/>
-
-      },
-      {
-        title: 'Cargos',
-        label: '',
-        href: '/cargos',
-        icon: <IconBoxSeam/>
-
-      },
-    ],
+    label: '',
+    href: '/leave-request',
+    icon: <IconRouteAltLeft />,
+    role: 'admin'
+  },
+  {
+    title: 'Requests',
+    label: '',
+    href: '/user-leave-request',
+    icon: <IconRouteAltLeft />,
+    role: 'employee'
   },
 ];
